@@ -49,7 +49,9 @@ class App extends PureComponent {
     });
   }
 
-  render() {
+  // TODO: edit; will be delegated 2 backend (and later re-calculate / re-validate)
+
+  render() { // (one could do a lot of styling)
     return (<div>
       <div><input type="search" value={this.state.filter || ''} onInput={((event) => this.doFilter(event.target.value)).bind(this)} /></div>
       <table>
