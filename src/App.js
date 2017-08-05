@@ -49,7 +49,7 @@ class App extends PureComponent {
     });
   }
 
-  // TODO: edit; will be delegated 2 backend (and later re-calculate / re-validate)
+  // TODO: edit - inline (replace row w/ form) or sep. nav; replaces one row; will be delegated 2 backend (and later re-calculate / re-validate)
 
   render() { // (one could do a lot of styling)
     return (<div>
