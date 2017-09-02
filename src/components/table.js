@@ -18,7 +18,7 @@ export class TableComponent extends PureComponent {
             <tbody>
                 {this.props.rows.map((r) => (<tr key={r._id}>
                     <td>{r.title || ''}</td>
-                    {this.props.cols.map((c) => (<td key={c._id} style={{ backgroundColor: ((c.choices.filter((ch) => ch.value == r.colvalues[c._id])[0] || {}).color || 'white') }}>{r.colvalues[c._id] || ''}</td>))}
+                    {this.props.cols.map((c) => (<td key={c._id} style={{ backgroundColor: ((c.choices.filter((ch) => ch.value === r.colvalues[c._id])[0] || {}).color || 'white') }}>{r.colvalues[c._id] || ''}</td>))}
                 </tr>))}
             </tbody>
         </table>);
@@ -26,7 +26,7 @@ export class TableComponent extends PureComponent {
 }
 
 TableComponent.propTypes = {
-    cols: PropTypes.arrayOf(PropTypes.shape({_id: PropTypes.any, name: PropTypes.string.isRequired, choices: PropTypes.arrayOf(PropTypes.string)})).isRequired,
+    cols: PropTypes.arrayOf(PropTypes.shape({_id: PropTypes.any, name: PropTypes.string.isRequired, choices: PropTypes.arrayOf(PropTypes.shape({value: PropTypes.string.isRequired, color: PropTypes.string}))})).isRequired,
     rows: PropTypes.arrayOf(PropTypes.shape({_id: PropTypes.any, title: PropTypes.string.isRequired, colvalues: PropTypes.objectOf(PropTypes.string)})).isRequired,
     onSort: PropTypes.func,
     editorFactory: PropTypes.func, // when we do more than display

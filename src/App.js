@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import './App.css';
+//import 'bootstrap-css-only/css/bootstrap.css'
 import { TableComponent, TITLE, COL } from './components/table';
 
 class App extends PureComponent {
@@ -33,16 +34,16 @@ class App extends PureComponent {
     }
 
     doSort(what, colid) { // (for large data sets, we'd need the backend)
-        let desc = ((!this.state.sort.desc) && this.state.sort.what == what && this.state.sort.colid == colid);
+        let desc = ((!this.state.sort.desc) && this.state.sort.what === what && this.state.sort.colid === colid);
         this.setState({
             rows: [].concat(this.state.rows).sort((r1, r2) => {
-                let v1 = ((TITLE == what ? r1.title : COL == what ? r1.colvalues[colid] : undefined) || '');
-                let v2 = ((TITLE == what ? r2.title : COL == what ? r2.colvalues[colid] : undefined) || '');
+                let v1 = ((TITLE === what ? r1.title : COL === what ? r1.colvalues[colid] : undefined) || '');
+                let v2 = ((TITLE === what ? r2.title : COL === what ? r2.colvalues[colid] : undefined) || '');
                 return (desc ? -1 : 1) * (v1 < v2 ? -1 : v1 > v2 ? 1 : 0);
             }),
             sort: {
                 what: what,
-                colid: (COL == what ? colid : null),
+                colid: (COL === what ? colid : null),
                 desc: desc
             }
         });
