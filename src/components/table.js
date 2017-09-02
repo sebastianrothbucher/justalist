@@ -26,8 +26,8 @@ export class TableComponent extends PureComponent {
 }
 
 TableComponent.propTypes = {
-    cols: PropTypes.arrayOf(PropTypes.object).isRequired,
-    rows: PropTypes.arrayOf(PropTypes.object).isRequired,
+    cols: PropTypes.arrayOf(PropTypes.shape({_id: PropTypes.any, name: PropTypes.string.isRequired, choices: PropTypes.arrayOf(PropTypes.string)})).isRequired,
+    rows: PropTypes.arrayOf(PropTypes.shape({_id: PropTypes.any, title: PropTypes.string.isRequired, colvalues: PropTypes.objectOf(PropTypes.string)})).isRequired,
     onSort: PropTypes.func,
     editorFactory: PropTypes.func, // when we do more than display
 };
