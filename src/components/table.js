@@ -5,7 +5,7 @@ import '../App.css';
 export const TITLE = 'TITLE';
 export const COL = 'COL';
 
-export class TableComponent extends PureComponent {
+export class TableComponent extends PureComponent { // TODO: next: dropdown choice (from PEN!)
 
     render() {
         return (<table>
