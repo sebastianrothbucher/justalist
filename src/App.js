@@ -52,6 +52,7 @@ class App extends PureComponent {
     // TODO: edit - inline (replace row w/ form) or sep. nav; replaces one row; will be delegated 2 backend (and later re-calculate / re-validate)
 
     render() { // (one could do a lot of styling)
+        // TODO: select cols to show, supply editors, open details (including col.detailOnly)
         return (<div>
             <div><input type="search" value={this.state.filter || ''} onInput={((event) => this.doFilter(event.target.value)).bind(this)} /></div>
             <TableComponent cols={this.state.cols} rows={this.state.rowsFiltered || this.state.rows} onSort={this.doSort.bind(this)} />

@@ -1,0 +1,70 @@
+span[role="suggestPos"] {
+    position: relative; 
+    display: inline-block;
+}
+span[role="current"] {
+    display: inline-block;
+    border-bottom: 1px solid lightgrey; 
+    padding: 2px 20px 2px 2px; 
+    min-width: 80px;
+}
+span[role="current"]:empty {
+    padding: 2px 2px 2px 2px; 
+}
+span[role="current"]:empty:after {
+    content: 'pls. select';
+    color: lightgrey;
+}
+span[role="clear"] {
+    cursor: pointer; 
+    font-size: 50%;
+    line-height: 15px;
+    display: inline-block;
+    height: 14px;
+    width: 14px;
+    text-align: center;
+    vertical-align: middle;
+    margin-left: -14px; 
+    margin-top: -2px;
+    border-radius: 8px; 
+    background: grey; 
+    color: white;
+}
+span[role="clear"]:after {
+    content: 'X';
+}
+span[role="current"]:empty+span[role="clear"] {
+    display: none;
+}
+ul[role="suggestContent"] {
+    display: none; 
+    position: absolute;
+    list-style-type: none; 
+    left: 0; 
+    top: 100%; 
+    margin: 0; 
+    padding: 0;
+}
+ul[role="suggestContent"]:before { /* "arrow" */
+    display: block;
+    content: '';
+    height: 0;
+    width: 0;
+    border-style: solid;
+    border-color: transparent transparent darkgrey transparent;
+    border-width: 0 5px 5px 5px;
+    margin-left: 49%; /* fallback */
+    margin-left: calc(50% - 5px);
+}
+ul[role="suggestContent"] li {
+    cursor: pointer; 
+    padding: 2px; 
+    white-space: nowrap;
+}
+ul[role="suggestContent"] li.sel {
+    font-weight: bold;
+}
+span[role="suggestPos"]:hover ul[role="suggestContent"], 
+span[role="suggestPos"]:focus ul[role="suggestContent"] {
+    display: block;
+}
