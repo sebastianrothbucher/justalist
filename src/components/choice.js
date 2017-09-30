@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import '../App.css';
+import './choice.css';
 
 export class ChoiceComponent extends PureComponent {
 
@@ -17,7 +17,7 @@ export class ChoiceComponent extends PureComponent {
         });
     }
 
-    _onKeyDown() { // TODO: fallback 2 keyCode
+    _onKeyDown(event) { // TODO: fallback 2 keyCode
         let currIndex = this.state.selIndex;
         if ("ArrowDown" === event.key) {
             currIndex++;
@@ -36,20 +36,24 @@ export class ChoiceComponent extends PureComponent {
                 selIndex: currIndex
             });
         } else if ("Enter" === event.key) {
-            this.props.onChange ? this.props.onChange(this.props.choices[currIndex]) : null;
+            if (this.props.onChange) {
+                this.props.onChange(this.props.choices[currIndex]);
+            }
         } else if ("Backspace" === event.key) {
-            this.props.onChange ? this.props.onChange(null) : null;
+            if (this.props.onChange) {
+                this.props.onChange(null);
+            }
         }
     }
 
     render() {
-        return (<span aria-role="listbox">
-            <span role="suggestPos" tabindex="0" onFocus={this.resetSel.bind(this)} onBlur={this.resetSel.bind(this)} onKeyDown={this._onKeyDown.bind(this)}>
-                <span role="current" style={{backgroundColor: ((this.props.value ? this.props.value.color : undefined) || 'white')}}>{this.props.value ? this.props.value.value : ''}</span>
-                <span role="clear" onClick={(() => (this.props.onChange ? this.props.onChange(null) : null)).bind(this)}></span>
-                <ul role="suggestContent">
+        return (<span className="choice" role="listbox">
+            <span className="suggestPos" tabIndex="0" onFocus={this.resetSel.bind(this)} onBlur={this.resetSel.bind(this)} onKeyDown={this._onKeyDown.bind(this)}>
+                <span className="current" style={{backgroundColor: ((this.props.value ? this.props.value.color : undefined) || 'white')}}>{this.props.value ? this.props.value.value : ''}</span>
+                <span className="clear" onClick={() => (this.props.onChange ? this.props.onChange(null) : null)}></span>
+                <ul className="suggestContent">
                     {this.props.choices.map((c, i) => (
-                        <li key={i} aria-role="option" onClick={(() => (this.props.onChange ? this.props.onChange(null) : null)).bind(this)} className={this.state.selIndexx === i ? 'sel' : ''} style={{backgroundColor: (c.color || 'white')}}>{c.value}</li>
+                        <li key={i} role="option" onClick={() => (this.props.onChange ? this.props.onChange(c) : null)} aria-selected={this.state.selIndex === i ? 'selected' : null} className={this.state.selIndex === i ? 'sel' : ''} style={{backgroundColor: (c.color || 'white')}}>{c.value}</li>
                     ))}
                 </ul>
             </span>

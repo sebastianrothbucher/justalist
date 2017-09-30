@@ -2,12 +2,13 @@ import React, { PureComponent } from 'react';
 import './App.css';
 //import 'bootstrap-css-only/css/bootstrap.css'
 import { TableComponent, TITLE, COL } from './components/table';
+import { ChoiceComponent } from './components/choice';
 
 class App extends PureComponent {
     constructor() {
         super();
         this.state = { // most likely from a backend via componentMounted and poss. w/ real-time updates
-            cols: [
+            cols: [ // TODO: nicer colors, also nicer CSS for choice from pen
                 { _id: "col1", name: "Mocks", choices: [{ value: "in progress", color: "yellow" }, { value: "need more love", color: "red" }, { value: "done", color: "green" }, { value: "postponed" }] },
                 { _id: "col2", name: "Tests", choices: [{ value: "fail", color: "red" }, { value: "pass", color: "green" }] }
             ],
@@ -25,12 +26,16 @@ class App extends PureComponent {
         };
     }
 
-    doFilter(filter) { // (for large data sets, we'd need the backend; and we could do more advanced filtering)
-        let filterLower = filter ? filter.toLowerCase() : filter;
+    doFilter(filter, rows) { // (for large data sets, we'd need the backend; and we could do more advanced filtering)
         this.setState({
-            rowsFiltered: (filter ? [].concat(this.state.rows).filter((r) => (r.title || '').toLowerCase().indexOf(filterLower) >= 0 || Object.keys(r.colvalues).map((colid) => r.colvalues[colid]).filter((colvalue) => (colvalue || '').toLowerCase().indexOf(filterLower) >= 0).length > 0) : null),
+            rowsFiltered: this._filterRows(filter, this.state.rows),
             filter: (filter || null)
         });
+    }
+
+    _filterRows(filter, rows) {
+        let filterLower = filter ? filter.toLowerCase() : filter;
+        return (filter ? [].concat(rows).filter((r) => (r.title || '').toLowerCase().indexOf(filterLower) >= 0 || Object.keys(r.colvalues).map((colid) => r.colvalues[colid]).filter((colvalue) => (colvalue || '').toLowerCase().indexOf(filterLower) >= 0).length > 0) : null);
     }
 
     doSort(what, colid) { // (for large data sets, we'd need the backend)
@@ -49,13 +54,27 @@ class App extends PureComponent {
         });
     }
 
-    // TODO: edit - inline (replace row w/ form) or sep. nav; replaces one row; will be delegated 2 backend (and later re-calculate / re-validate)
+    doRowEdit(newRow) { // remember: we're a pure component; TODO: with backend (and later re-calculate / re-validate)
+        let newRows = this.state.rows.map((r) => (r._id === newRow._id ? newRow : r));
+        this.setState({
+            rows: newRows,
+            rowsFiltered: this._filterRows(this.state.filter, newRows)
+        });
+    }
+
+    createEditor(row, colId, editCallback) { // TODO: distinguish between col types
+        return (<ChoiceComponent choices={this.state.cols.find((c) => (c._id === colId)).choices} 
+            value={(this.state.cols.find((c) => (c._id === colId)).choices.find((c) => c.value === row.colvalues[colId]) || null)} 
+            onChange={((choice) => editCallback(choice ? choice.value : null))} />);
+    }
 
     render() { // (one could do a lot of styling)
-        // TODO: select cols to show, supply editors, open details (including col.detailOnly)
         return (<div>
-            <div><input type="search" value={this.state.filter || ''} onInput={((event) => this.doFilter(event.target.value)).bind(this)} /></div>
-            <TableComponent cols={this.state.cols} rows={this.state.rowsFiltered || this.state.rows} onSort={this.doSort.bind(this)} />
+            <div><input type="search" value={this.state.filter || ''} onInput={(event) => this.doFilter(event.target.value)} /></div>
+            <TableComponent cols={this.state.cols} rows={this.state.rowsFiltered || this.state.rows}
+                onSort={this.doSort.bind(this)}
+                onRowEdit={this.doRowEdit.bind(this)}
+                editorFactory={this.createEditor.bind(this)} />
         </div>);
     }
 }

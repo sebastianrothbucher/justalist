@@ -32,7 +32,9 @@ export class TableComponent extends PureComponent { // TODO: next: dropdown choi
     }
 
     closeEditRow(save) { // (back from immutable)
-        (save && this.props.onRowEdit) ? this.props.onRowEdit(this.state.editRow.toJS()) : null;
+        if (save && this.props.onRowEdit) {
+            this.props.onRowEdit(this.state.editRow.toJS());
+        };
         this.setState({
             editRow: null
         });
@@ -42,9 +44,9 @@ export class TableComponent extends PureComponent { // TODO: next: dropdown choi
         return (<table>
             <thead>
                 <tr>
-                    <th><span>Title</span> <a className="link" onClick={(() => (this.props.onSort ? this.props.onSort(TITLE) : null)).bind(this)}>^v</a></th>
+                    <th><span>Title</span> <a className="link" onClick={() => (this.props.onSort ? this.props.onSort(TITLE) : null)}>^v</a></th>
                     {this.props.cols.map((c) => (
-                        <th key={c._id}><span>{c.name}</span> <a className="link" onClick={(() => (this.props.onSort ? this.props.onSort(COL, c._id) : null)).bind(this)}>^v</a></th>
+                        <th key={c._id}><span>{c.name}</span> <a className="link" onClick={() => (this.props.onSort ? this.props.onSort(COL, c._id) : null)}>^v</a></th>
                     ))}
                     <th></th>
                 </tr>
@@ -52,11 +54,11 @@ export class TableComponent extends PureComponent { // TODO: next: dropdown choi
             <tbody>
                 {this.props.rows.map((r) => (this.state.editRow && this.state.editRow.get('_id') === r._id)?( // TODO: dropdown 4 title, external links in add 2 edit (open on focus/hover)
                     <tr key={r._id}>
-                        <td><input value={this.state.editRow.get('title') || ''} onChange={((event) => this.changeEditRowTitle(event.target.value)).bind(this)} /></td>
+                        <td><input value={this.state.editRow.get('title') || ''} onChange={(event) => this.changeEditRowTitle(event.target.value)} /></td>
                         {this.props.cols.map((c) => (
-                            <td key={c._id}>{this.props.editorFactory ? this.props.editorFactory(this.state.editRow.toJS(), c._id, ((val) => (this.changeEditRowCol(c._id, val))).bind(this)) : (<input value={this.state.editRow.get('colvalues').get(c._id) || ''} onChange={((event) => (this.changeEditRowCol(c._id, event.target.value))).bind(this)} />)}</td>
+                            <td key={c._id}>{this.props.editorFactory ? this.props.editorFactory(this.state.editRow.toJS(), c._id, (val) => (this.changeEditRowCol(c._id, val))) : (<input value={this.state.editRow.get('colvalues').get(c._id) || ''} onChange={(event) => (this.changeEditRowCol(c._id, event.target.value))} />)}</td>
                         ))}
-                        <td><small><a className="link" onClick={(() => this.closeEditRow(true)).bind(this)}>Save</a> <a className="link" onClick={(() => this.closeEditRow()).bind(this)}>Discard</a></small></td>
+                        <td><small><a className="link" onClick={() => this.closeEditRow(true)}>Save</a> <a className="link" onClick={() => this.closeEditRow()}>Discard</a></small></td>
                     </tr>
                 ):(
                     <tr key={r._id}>
@@ -64,7 +66,7 @@ export class TableComponent extends PureComponent { // TODO: next: dropdown choi
                         {this.props.cols.map((c) => (
                             <td key={c._id} style={{ backgroundColor: ((c.choices.filter((ch) => ch.value === r.colvalues[c._id])[0] || {}).color || 'white') }}>{r.colvalues[c._id] || ''}</td>
                         ))}
-                        <td><small><a className="link" onClick={(() => this.startEditRow(r)).bind(this)}>Edit</a></small></td>
+                        <td><small><a className="link" onClick={() => this.startEditRow(r)}>Edit</a></small></td>
                     </tr>
                 ))}
             </tbody>
@@ -76,7 +78,7 @@ TableComponent.propTypes = {
     cols: PropTypes.arrayOf(PropTypes.shape({_id: PropTypes.any, name: PropTypes.string.isRequired, choices: PropTypes.arrayOf(PropTypes.shape({value: PropTypes.string.isRequired, color: PropTypes.string}))})).isRequired,
     rows: PropTypes.arrayOf(PropTypes.shape({_id: PropTypes.any, title: PropTypes.string.isRequired, colvalues: PropTypes.objectOf(PropTypes.string)})).isRequired,
     onSort: PropTypes.func, // gets type as TITLE/COL and (for latter) col id
-    onOpenDetails: PropTypes.func, // TODO: actually trigger; gets row
+    onOpenDetails: PropTypes.func, // TODO: actually trigger; gets row, open details in main app
     onRowEdit: PropTypes.func, // when a row was edited - gets deep copy of new row
-    editorFactory: PropTypes.func, // when we do more than display; gets row, cell id, callback for edit
+    editorFactory: PropTypes.func, // when we do more than display; gets row, col id, callback for edit
 };

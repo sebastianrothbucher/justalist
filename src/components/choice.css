@@ -1,21 +1,21 @@
-span[role="suggestPos"] {
+span.choice span.suggestPos {
     position: relative; 
     display: inline-block;
 }
-span[role="current"] {
+span.choice span.current {
     display: inline-block;
     border-bottom: 1px solid lightgrey; 
     padding: 2px 20px 2px 2px; 
     min-width: 80px;
 }
-span[role="current"]:empty {
+span.choice span.current:empty {
     padding: 2px 2px 2px 2px; 
 }
-span[role="current"]:empty:after {
+span.choice span.current:empty:after {
     content: 'pls. select';
     color: lightgrey;
 }
-span[role="clear"] {
+span.choice span.clear {
     cursor: pointer; 
     font-size: 50%;
     line-height: 15px;
@@ -30,13 +30,13 @@ span[role="clear"] {
     background: grey; 
     color: white;
 }
-span[role="clear"]:after {
+span.choice span.clear:after {
     content: 'X';
 }
-span[role="current"]:empty+span[role="clear"] {
+span.choice span.current:empty+span.clear {
     display: none;
 }
-ul[role="suggestContent"] {
+span.choice ul.suggestContent {
     display: none; 
     position: absolute;
     list-style-type: none; 
@@ -45,7 +45,7 @@ ul[role="suggestContent"] {
     margin: 0; 
     padding: 0;
 }
-ul[role="suggestContent"]:before { /* "arrow" */
+span.choice ul.suggestContent:before { /* "arrow" */
     display: block;
     content: '';
     height: 0;
@@ -56,15 +56,15 @@ ul[role="suggestContent"]:before { /* "arrow" */
     margin-left: 49%; /* fallback */
     margin-left: calc(50% - 5px);
 }
-ul[role="suggestContent"] li {
+span.choice ul.suggestContent li {
     cursor: pointer; 
     padding: 2px; 
     white-space: nowrap;
 }
-ul[role="suggestContent"] li.sel {
+span.choice ul.suggestContent li.sel {
     font-weight: bold;
 }
-span[role="suggestPos"]:hover ul[role="suggestContent"], 
-span[role="suggestPos"]:focus ul[role="suggestContent"] {
+span.choice span.suggestPos:hover ul.suggestContent, 
+span.choice span.suggestPos:focus ul.suggestContent {
     display: block;
 }
