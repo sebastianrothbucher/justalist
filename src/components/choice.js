@@ -11,7 +11,16 @@ export class ChoiceComponent extends PureComponent {
         };
     }
 
-    resetSel() {
+    _setSel(what, stay) {
+        if (this.props.onChange) {
+            this.props.onChange(what);
+        }
+        if (!stay) {
+            this.suggestPos.blur();
+        }
+    }
+
+    _resetSel() {
         this.setState({
             selIndex: -1
         });
@@ -36,24 +45,20 @@ export class ChoiceComponent extends PureComponent {
                 selIndex: currIndex
             });
         } else if ("Enter" === event.key) {
-            if (this.props.onChange) {
-                this.props.onChange(this.props.choices[currIndex]);
-            }
+            this._setSel(this.props.choices[currIndex], true);
         } else if ("Backspace" === event.key) {
-            if (this.props.onChange) {
-                this.props.onChange(null);
-            }
+            this._setSel(null, true);
         }
     }
 
     render() {
         return (<span className="choice" role="listbox">
-            <span className="suggestPos" tabIndex="0" onFocus={this.resetSel.bind(this)} onBlur={this.resetSel.bind(this)} onKeyDown={this._onKeyDown.bind(this)}>
+            <span className="suggestPos" tabIndex="0" ref={(e) => this.suggestPos=e} onFocus={this._resetSel.bind(this)} onBlur={this._resetSel.bind(this)} onKeyDown={this._onKeyDown.bind(this)}>
                 <span className="current" style={{backgroundColor: ((this.props.value ? this.props.value.color : undefined) || 'white')}}>{this.props.value ? this.props.value.value : ''}</span>
-                <span className="clear" onClick={() => (this.props.onChange ? this.props.onChange(null) : null)}></span>
+                <span className="clear" onClick={() => this._setSel(null)}></span>
                 <ul className="suggestContent">
                     {this.props.choices.map((c, i) => (
-                        <li key={i} role="option" onClick={() => (this.props.onChange ? this.props.onChange(c) : null)} aria-selected={this.state.selIndex === i ? 'selected' : null} className={this.state.selIndex === i ? 'sel' : ''} style={{backgroundColor: (c.color || 'white')}}>{c.value}</li>
+                        <li key={i} role="option" onClick={() => this._setSel(c)} aria-selected={this.state.selIndex === i ? 'selected' : null} className={this.state.selIndex === i ? 'sel' : ''} style={{backgroundColor: (c.color || 'white')}}>{c.value}</li>
                     ))}
                 </ul>
             </span>

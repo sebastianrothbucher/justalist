@@ -65,7 +65,7 @@ class App extends PureComponent {
     createEditor(row, colId, editCallback) { // TODO: distinguish between col types
         return (<ChoiceComponent choices={this.state.cols.find((c) => (c._id === colId)).choices} 
             value={(this.state.cols.find((c) => (c._id === colId)).choices.find((c) => c.value === row.colvalues[colId]) || null)} 
-            onChange={((choice) => editCallback(choice ? choice.value : null))} />);
+            onChange={(choice) => editCallback(choice ? choice.value : null)} />);
     }
 
     render() { // (one could do a lot of styling)
