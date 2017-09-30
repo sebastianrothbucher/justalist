@@ -30,7 +30,7 @@ export class ChoiceComponent extends PureComponent {
         let currIndex = this.state.selIndex;
         if ("ArrowDown" === event.key) {
             currIndex++;
-            if (currIndex >= this.choices.length) {
+            if (currIndex >= this.props.choices.length) {
                 currIndex = 0;
             }
             this.setState({
@@ -39,7 +39,7 @@ export class ChoiceComponent extends PureComponent {
         } else if ("ArrowUp" === event.key) {
             currIndex--;
             if (currIndex < 0) {
-                currIndex = (this.choices.length - 1);
+                currIndex = (this.props.choices.length - 1);
             }
             this.setState({
                 selIndex: currIndex
