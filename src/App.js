@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import './App.css';
 //import 'bootstrap-css-only/css/bootstrap.css'
 import { TableComponent, TITLE, COL } from './components/table';
 import { ChoiceComponent } from './components/choice';
+import { loadCols } from './actions';
 
 class App extends PureComponent {
     constructor() {
@@ -75,8 +77,23 @@ class App extends PureComponent {
                 onSort={this.doSort.bind(this)}
                 onRowEdit={this.doRowEdit.bind(this)}
                 editorFactory={this.createEditor.bind(this)} />
+            <div>
+                <button onClick={this.props.loadCols}>Load cols</button>
+                <span>{(this.props.cols || []).join(', ')}</span>
+            </div>
         </div>);
     }
 }
 
-export default App;
+const mapStateToProps = state => ({
+    cols: state.cols
+});
+
+const mapDispatchToProps = dispatch => ({
+    loadCols: () => dispatch(loadCols())
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(App);
