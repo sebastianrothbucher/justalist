@@ -1,9 +1,9 @@
-jest.mock('../wndw');
+jest.mock('../services/colsService');
 
 import unexpected from 'unexpected';
 import configureMockStore from 'redux-mock-store'
 import thunkMiddleware from 'redux-thunk'
-import wndw from '../wndw';
+import { loadColsService as loadColsServiceMock } from '../services/colsService';
 import { loadCols } from './actions';
 
 const expect = unexpected.clone();
@@ -11,11 +11,15 @@ const mockStore = configureMockStore([thunkMiddleware]);
 
 describe("action creators", () => {
 
+    beforeEach(() => {
+        loadColsServiceMock.mockClear();
+    });
+
     it("loads cols", () => {
-        wndw.setTimeout.mockImplementation(cb => cb());
+        loadColsServiceMock.mockImplementation(() => Promise.resolve(['c1', 'c2']));
         const store = mockStore({});
         return store.dispatch(loadCols()).then(() => {
-            expect(wndw.setTimeout.mock.calls.length, 'to be', 1);
+            expect(loadColsServiceMock.mock.calls.length, 'to be', 1);
             expect(
                 store.getActions(),
                 'to exhaustively satisfy',

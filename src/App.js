@@ -93,6 +93,7 @@ const mapDispatchToProps = dispatch => ({
     loadCols: () => dispatch(loadCols())
 });
 
+export { App as vanilla };
 export default connect(
     mapStateToProps,
     mapDispatchToProps

@@ -1,7 +1,7 @@
-import wndw from '../wndw';
+import { loadColsService } from '../services/colsService';
 
 export const loadCols = () =>
     (dispatch) =>
-        new Promise((resolve) => wndw.setTimeout(resolve, 200)).then(() => {
-            dispatch({ type: 'COLS_LOADED', cols: ['c1', 'c2'] });
+        loadColsService().then(res => {
+            dispatch({ type: 'COLS_LOADED', cols: res });
         });
