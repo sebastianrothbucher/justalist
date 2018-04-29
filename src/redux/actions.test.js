@@ -1,9 +1,9 @@
-jest.mock('./wndw');
+jest.mock('../wndw');
 
 import unexpected from 'unexpected';
 import configureMockStore from 'redux-mock-store'
 import thunkMiddleware from 'redux-thunk'
-import wndw from './wndw';
+import wndw from '../wndw';
 import { loadCols } from './actions';
 
 const expect = unexpected.clone();

@@ -1,4 +1,4 @@
-import wndw from './wndw';
+import wndw from '../wndw';
 
 export const loadCols = () =>
     (dispatch) =>

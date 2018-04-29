@@ -4,7 +4,7 @@ import './App.css';
 //import 'bootstrap-css-only/css/bootstrap.css'
 import { TableComponent, TITLE, COL } from './components/table';
 import { ChoiceComponent } from './components/choice';
-import { loadCols } from './actions';
+import { loadCols } from './redux/actions';
 
 class App extends PureComponent {
     constructor() {
