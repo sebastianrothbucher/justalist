@@ -6,7 +6,7 @@ import { loadColsService } from './colsService';
 
 const expect = unexpected.clone();
 
-describe("cols service", () => {
+describe("cols service", () => { // TODO: 4 real
 
     beforeEach(() => {
         wndwMock.setTimeout.mockClear();

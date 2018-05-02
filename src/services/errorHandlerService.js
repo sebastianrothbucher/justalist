@@ -1,0 +1,1 @@
+export const handleError = (err) => console.log(err); // TODO: 4 real - call backend 2 log

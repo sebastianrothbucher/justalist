@@ -1,4 +1,4 @@
 import wndw from '../wndw';
 
 export const loadColsService = () =>
-    new Promise((resolve) => wndw.setTimeout(() => resolve(['c1', 'c2']), 200));
+    new Promise((resolve) => wndw.setTimeout(() => resolve(['c1', 'c2']), 200)); // TODO: 4 real
