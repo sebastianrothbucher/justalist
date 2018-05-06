@@ -1,6 +1,6 @@
-import { COLS_LOADED, ROWS_LOADED, ERROR } from './actionConstants';
+import { COLS_LOADED, ROWS_LOADED, FILTER, SORT, ERROR} from './actionConstants';
 import { loadColsService } from '../services/colsService';
-import { loadRowsService } from '../services/colsService';
+import { loadRowsService } from '../services/rowsService';
 import { handleError } from '../services/errorHandlerService';
 
 // full load of cols (assume not 2 change in 1st iter - then same as rows)

@@ -15,7 +15,7 @@ describe("cols service", () => { // TODO: 4 real
     it("loads cols", () => {
         wndwMock.setTimeout.mockImplementation(cb => cb());
         return loadColsService().then(res => {
-            expect(res, 'to exhaustively satisfy', ['c1', 'c2']);
+            expect(res, 'to satisfy', [{ _id: 'c1' }, { _id: 'c2' }]);
         });
     });
 

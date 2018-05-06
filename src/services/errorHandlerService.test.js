@@ -1,2 +1,9 @@
-describe("error handler service", () => { // TODO: 4 real
+import { handleError } from './errorHandlerService';
+
+describe("error handler service", () => {
+
+    it("handles errors", () => {
+        handleError("whatever"); // (so far: just pass)
+    });
+
 });
