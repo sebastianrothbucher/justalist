@@ -1,4 +1,4 @@
-import { COLS_LOADED, ROWS_LOADED, FILTER, SORT, ERROR, SORT_TITLE, SORT_COL } from './actionConstants'
+import { COLS_LOADED, ROWS_LOADED, FILTER, SORT, EDIT_ROW, ERROR, SORT_TITLE, SORT_COL } from './actionConstants'
 import unexpected from 'unexpected';
 import { coreReducer, mainReducer, filteringReducerDecorator, sortReducerDecorator } from './reducers';
 
@@ -41,6 +41,15 @@ describe("reducers", () => {
                 coreReducer(oldState, { type: SORT, sort: { what: SORT_TITLE, desc: true } }),
                 'to exhaustively satisfy',
                 { a: 88, sort: { what: SORT_TITLE, desc: true } }
+            );
+        });
+
+        it("edits rows", () => {
+            const oldState = { a: 88, rows: [{ _id: 'r1' }, { _id: 'r2' }] };
+            expect(
+                coreReducer(oldState, { type: EDIT_ROW, newRow: { _id: 'r2', title: 'new title' } }),
+                'to exhaustively satisfy',
+                { a: 88, rows: [{ _id: 'r1' }, { _id: 'r2', title: 'new title' }] }
             );
         });
 

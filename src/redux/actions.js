@@ -1,4 +1,4 @@
-import { COLS_LOADED, ROWS_LOADED, FILTER, SORT, ERROR} from './actionConstants';
+import { COLS_LOADED, ROWS_LOADED, FILTER, SORT, EDIT_ROW, ERROR } from './actionConstants';
 import { loadColsService } from '../services/colsService';
 import { loadRowsService } from '../services/rowsService';
 import { handleError } from '../services/errorHandlerService';
@@ -23,5 +23,11 @@ export const loadRows = () =>
             dispatch({ type: ERROR, err: err });
         });
 
+export const filter = (val) => ({ type: FILTER, filter: val });
+
+export const sort = (what, colid, desc) => ({ type: SORT, sort: { what: what, colid: colid, desc: desc } });
+
+export const editRow = (newRow) => ({ type: EDIT_ROW, newRow: newRow });
+
 // TODO: listen for row changes (don't re-load all)
-// TODO: create / update
+// TODO: create / update (replace rowEdit above)

@@ -1,4 +1,4 @@
-import { COLS_LOADED, ROWS_LOADED, FILTER, SORT, ERROR, SORT_TITLE, SORT_COL } from './actionConstants';
+import { COLS_LOADED, ROWS_LOADED, FILTER, SORT, EDIT_ROW, ERROR, SORT_TITLE, SORT_COL } from './actionConstants';
 
 export const coreReducer = (state, action) => {
     switch (action.type) {
@@ -6,10 +6,12 @@ export const coreReducer = (state, action) => {
             return { ...state, cols: action.cols };
         case ROWS_LOADED:
             return { ...state, rows: action.rows };
-        case FILTER: 
+        case FILTER:
             return { ...state, filter: action.filter };
-        case SORT: 
+        case SORT:
             return { ...state, sort: action.sort };
+        case EDIT_ROW:
+            return { ...state, rows: (state.rows || []).map(row => row._id === action.newRow._id ? action.newRow : row) };
         case ERROR:
             return { ...state, err: action.err };
 
@@ -22,7 +24,7 @@ export const filteringReducerDecorator = (oldState, state) => { // (client-side)
     if (oldState.rows !== state.rows || oldState.filter !== state.filter) {
         let filterLower = state.filter ? state.filter.toLowerCase() : state.filter;
         return {
-            ...state, rowsFiltered: (state.filter ? [... (state.rows || [])]
+            ...state, rowsFiltered: (state.filter ? [...(state.rows || [])]
                 .filter(
                     (r) => (r.title || '').toLowerCase().indexOf(filterLower) >= 0 ||
                         Object.keys(r.colvalues).map((colid) => r.colvalues[colid])
@@ -37,7 +39,7 @@ export const filteringReducerDecorator = (oldState, state) => { // (client-side)
 export const sortReducerDecorator = (oldState, state) => { // (client-side)
     if (oldState.rows !== state.rows || oldState.rowsFiltered !== state.rowsFiltered || oldState.sort !== state.sort) {
         return {
-            ...state, rowsSorted: (state.sort ? [... (state.rowsFiltered || state.rows || [])]
+            ...state, rowsSorted: (state.sort ? [...(state.rowsFiltered || state.rows || [])]
                 .sort(
                     (r1, r2) => {
                         let v1 = ((SORT_TITLE === state.sort.what ? r1.title : SORT_COL === state.sort.what ? r1.colvalues[state.sort.colid] : undefined) || '');
