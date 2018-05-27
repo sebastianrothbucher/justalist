@@ -30,4 +30,4 @@ export const sort = (what, colid, desc) => ({ type: SORT, sort: { what: what, co
 export const editRow = (newRow) => ({ type: EDIT_ROW, newRow: newRow });
 
 // TODO: listen for row changes (don't re-load all)
-// TODO: create / update (replace rowEdit above)
+// TODO: create / update (replace editRow above)

@@ -6,7 +6,7 @@ import '../App.css';
 export const TITLE = 'TITLE';
 export const COL = 'COL';
 
-export class TableComponent extends PureComponent { // TODO: next: dropdown choice (from PEN!), one; then several rows at once
+export class TableComponent extends PureComponent {
 
     constructor() {
         super();
@@ -70,7 +70,7 @@ export class TableComponent extends PureComponent { // TODO: next: dropdown choi
                     </tr>
                 ))}
             </tbody>
-        </table>);
+        </table>); // TODO: tfoot for several rows at once
     }
 }
 

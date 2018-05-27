@@ -7,14 +7,13 @@ import { BASE_URL } from './serviceConstants';
 
 const expect = unexpected.clone();
 
-describe("rows service", () => { // TODO: 4 real
+describe("rows service", () => {
 
     beforeEach(() => {
-        wndwMock.setTimeout.mockClear();
+        wndwMock.fetch.mockClear();
     });
 
     it("loads rows", () => {
-        // wndwMock.setTimeout.mockImplementation(cb => cb());
         wndwMock.fetch.mockReturnValue(Promise.resolve({json: () => ([{ _id: 'r1' }, { _id: 'r2' }])}));
         return loadRowsService().then(res => {
             expect(wndwMock.fetch.mock.calls, 'to exhaustively satisfy', [[BASE_URL + '/1/rows']]);
