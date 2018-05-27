@@ -20,6 +20,7 @@
     "unexpected-react": "^5.0.1"
   },
   "scripts": {
+    "prestart": "cp node_modules/bootstrap/dist/css/bootstrap.min.css public/bootstrap.min.css",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

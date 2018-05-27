@@ -25,8 +25,8 @@ class App extends PureComponent {
 
     render() { // (one could do a lot of styling)
         return (<div>
-            <div><input type="search" value={this.props.filter || ''} onInput={(event) => this.props.doFilter(event.target.value)} /></div>
-            <TableComponent cols={this.props.cols} rows={this.props.rowsSorted || this.props.rowsFiltered || this.props.rows}
+            <div className="form-inline"><input className="form-control" type="search" value={this.props.filter || ''} onInput={(event) => this.props.doFilter(event.target.value)} /></div>
+            <TableComponent tableClassName="table" cols={this.props.cols} rows={this.props.rowsSorted || this.props.rowsFiltered || this.props.rows}
                 onSort={(what, colid) => this.props.doSort(what, colid, (this.props.sort && this.props.sort.what === what && this.props.sort.colid === colid) ? (!this.props.sort.desc) : false)}
                 onRowEdit={(newRow) => this.props.doEditRow(newRow)}
                 editorFactory={this.createEditor.bind(this)} />

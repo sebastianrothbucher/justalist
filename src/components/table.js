@@ -6,6 +6,9 @@ import '../App.css';
 export const TITLE = 'TITLE';
 export const COL = 'COL';
 
+const TITLE_WIDTH = 40; // %
+const ACTION_WIDTH = 120; // px
+
 export class TableComponent extends PureComponent {
 
     constructor() {
@@ -41,32 +44,32 @@ export class TableComponent extends PureComponent {
     }
 
     render() {
-        return (<table>
-            <thead>
+        return (<table className={this.props.tableClassName}>
+            <thead className={this.props.theadClassName}>
                 <tr>
-                    <th><span>Title</span> <a className="link" onClick={() => (this.props.onSort ? this.props.onSort(TITLE) : null)}>^v</a></th>
+                    <th style={{ width: TITLE_WIDTH + "%" }}><span>Title</span> <a className="link" onClick={() => (this.props.onSort ? this.props.onSort(TITLE) : null)}>^v</a></th>
                     {this.props.cols.map((c) => (
-                        <th key={c._id}><span>{c.name}</span> <a className="link" onClick={() => (this.props.onSort ? this.props.onSort(COL, c._id) : null)}>^v</a></th>
+                        <th key={c._id} style={{ width: Math.floor((100 - TITLE_WIDTH) / this.props.cols.length) + "%" }}><span>{c.name}</span> <a className="link" onClick={() => (this.props.onSort ? this.props.onSort(COL, c._id) : null)}>^v</a></th>
                     ))}
-                    <th></th>
+                    <th style={{ width: ACTION_WIDTH + "px" }}></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody className={this.props.tbodyClassName}>
                 {this.props.rows.map((r) => (this.state.editRow && this.state.editRow.get('_id') === r._id)?( // TODO: dropdown 4 title, external links in add 2 edit (open on focus/hover)
                     <tr key={r._id}>
-                        <td><input value={this.state.editRow.get('title') || ''} onChange={(event) => this.changeEditRowTitle(event.target.value)} /></td>
+                        <td style={{ width: TITLE_WIDTH + "%" }}><input value={this.state.editRow.get('title') || ''} onChange={(event) => this.changeEditRowTitle(event.target.value)} /></td>
                         {this.props.cols.map((c) => (
-                            <td key={c._id}>{this.props.editorFactory ? this.props.editorFactory(this.state.editRow.toJS(), c._id, (val) => (this.changeEditRowCol(c._id, val))) : (<input value={this.state.editRow.get('colvalues').get(c._id) || ''} onChange={(event) => (this.changeEditRowCol(c._id, event.target.value))} />)}</td>
+                            <td key={c._id} style={{ backgroundColor: ((c.choices.filter((ch) => ch.value === r.colvalues[c._id])[0] || {}).color || 'white'), width: Math.floor((100 - TITLE_WIDTH) / this.props.cols.length) + "%" }}>{this.props.editorFactory ? this.props.editorFactory(this.state.editRow.toJS(), c._id, (val) => (this.changeEditRowCol(c._id, val))) : (<input value={this.state.editRow.get('colvalues').get(c._id) || ''} onChange={(event) => (this.changeEditRowCol(c._id, event.target.value))} />)}</td>
                         ))}
-                        <td><small><a className="link" onClick={() => this.closeEditRow(true)}>Save</a> <a className="link" onClick={() => this.closeEditRow()}>Discard</a></small></td>
+                        <td style={{ minWidth: ACTION_WIDTH + "px" }}><small><a className="link" onClick={() => this.closeEditRow(true)}>Save</a> <a className="link" onClick={() => this.closeEditRow()}>Discard</a></small></td>
                     </tr>
                 ):(
                     <tr key={r._id}>
-                        <td>{r.title || ''}</td>
+                        <td style={{ width: "40%" }}>{r.title || ''}</td>
                         {this.props.cols.map((c) => (
-                            <td key={c._id} style={{ backgroundColor: ((c.choices.filter((ch) => ch.value === r.colvalues[c._id])[0] || {}).color || 'white') }}>{r.colvalues[c._id] || ''}</td>
+                            <td key={c._id} style={{ backgroundColor: ((c.choices.filter((ch) => ch.value === r.colvalues[c._id])[0] || {}).color || 'white'), width: Math.floor((100 - TITLE_WIDTH) / this.props.cols.length) + "%" }}>{r.colvalues[c._id] || ''}</td>
                         ))}
-                        <td><small><a className="link" onClick={() => this.startEditRow(r)}>Edit</a></small></td>
+                        <td style={{ minWidth: ACTION_WIDTH + "px" }}><small><a className="link" onClick={() => this.startEditRow(r)}>Edit</a></small></td>
                     </tr>
                 ))}
             </tbody>
@@ -81,4 +84,7 @@ TableComponent.propTypes = {
     onOpenDetails: PropTypes.func, // TODO: actually trigger; gets row, open details in main app
     onRowEdit: PropTypes.func, // when a row was edited - gets deep copy of new row
     editorFactory: PropTypes.func, // when we do more than display; gets row, col id, callback for edit
+    tableClassName: PropTypes.string,
+    theadClassName: PropTypes.string,
+    tbodyClassName: PropTypes.string,
 };
