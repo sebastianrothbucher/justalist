@@ -44,12 +44,13 @@ export class TableComponent extends PureComponent {
     }
 
     render() {
+        const sortStyle = (what, colid) => ((this.props.sort && what === this.props.sort.what && (COL !== this.props.sort.what || colid === this.props.sort.colid)) ? (this.props.sort.desc ? "fa-sort-down" : "fa-sort-up") : "fa-unsorted");
         return (<table className={this.props.tableClassName}>
             <thead className={this.props.theadClassName}>
                 <tr>
-                    <th style={{ width: TITLE_WIDTH + "%" }}><span>Title</span> <a className="link" onClick={() => (this.props.onSort ? this.props.onSort(TITLE) : null)}>^v</a></th>
+                    <th style={{ width: TITLE_WIDTH + "%" }}><span>Title</span> <span role="button" className={"link fa " + sortStyle(TITLE)} onClick={() => (this.props.onSort ? this.props.onSort(TITLE) : null)}></span></th>
                     {this.props.cols.map((c) => (
-                        <th key={c._id} style={{ width: Math.floor((100 - TITLE_WIDTH) / this.props.cols.length) + "%" }}><span>{c.name}</span> <a className="link" onClick={() => (this.props.onSort ? this.props.onSort(COL, c._id) : null)}>^v</a></th>
+                        <th key={c._id} style={{ width: Math.floor((100 - TITLE_WIDTH) / this.props.cols.length) + "%" }}><span>{c.name}</span> <span role="button" className={"link fa " + sortStyle(COL, c._id)} onClick={() => (this.props.onSort ? this.props.onSort(COL, c._id) : null)}></span></th>
                     ))}
                     <th style={{ width: ACTION_WIDTH + "px" }}></th>
                 </tr>
@@ -80,6 +81,7 @@ export class TableComponent extends PureComponent {
 TableComponent.propTypes = {
     cols: PropTypes.arrayOf(PropTypes.shape({_id: PropTypes.any, name: PropTypes.string.isRequired, choices: PropTypes.arrayOf(PropTypes.shape({value: PropTypes.string.isRequired, color: PropTypes.string}))})).isRequired,
     rows: PropTypes.arrayOf(PropTypes.shape({_id: PropTypes.any, title: PropTypes.string.isRequired, colvalues: PropTypes.objectOf(PropTypes.string)})).isRequired,
+    sort: PropTypes.shape({}), // null or info on which sort to display
     onSort: PropTypes.func, // gets type as TITLE/COL and (for latter) col id
     onOpenDetails: PropTypes.func, // TODO: actually trigger; gets row, open details in main app
     onRowEdit: PropTypes.func, // when a row was edited - gets deep copy of new row

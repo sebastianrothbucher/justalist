@@ -52,7 +52,7 @@ export class ChoiceComponent extends PureComponent {
     }
 
     render() {
-        return (<span className="choice" role="listbox">
+        return (<span className={"choice" + (this.props.xpand ? " xpand" : "")} role="listbox">
             <span className="suggestPos" tabIndex="0" ref={(e) => this.suggestPos=e} onFocus={this._resetSel.bind(this)} onBlur={this._resetSel.bind(this)} onKeyDown={this._onKeyDown.bind(this)}>
                 <span className="current" style={{backgroundColor: ((this.props.value ? this.props.value.color : undefined) || 'white')}}>{this.props.value ? this.props.value.value : ''}</span>
                 <span className="clear" onClick={() => this._setSel(null)}></span>
@@ -69,5 +69,6 @@ export class ChoiceComponent extends PureComponent {
 ChoiceComponent.propTypes = {
     choices: PropTypes.arrayOf(PropTypes.shape({value: PropTypes.string.isRequired, color: PropTypes.string})).isRequired,
     value: PropTypes.shape({value: PropTypes.string.isRequired, color: PropTypes.string}),
-    onChange: PropTypes.func // gets new value as {value, color?} (null for empty)
+    onChange: PropTypes.func, // gets new value as {value, color?} (null for empty)
+    xpand: PropTypes.boolean,
 }

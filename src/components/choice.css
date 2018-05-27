@@ -2,11 +2,17 @@ span.choice span.suggestPos {
     position: relative; 
     display: inline-block;
 }
+span.choice.xpand span.suggestPos {
+    width: 100%;
+}
 span.choice span.current {
     display: inline-block;
     border-bottom: 1px solid lightgrey; 
     padding: 2px 20px 2px 2px; 
     min-width: 80px;
+}
+span.choice.xpand span.current {
+    width: 100%;
 }
 span.choice span.current:empty {
     padding: 2px 2px 2px 2px; 
@@ -56,10 +62,14 @@ span.choice ul.suggestContent:before { /* "arrow" */
     margin-left: 49%; /* fallback */
     margin-left: calc(50% - 5px);
 }
+span.choice.xpand ul.suggestContent {
+    width: 100%;
+}
 span.choice ul.suggestContent li {
     cursor: pointer; 
     padding: 2px; 
     white-space: nowrap;
+    padding-left: 8px;
 }
 span.choice ul.suggestContent li.sel {
     font-weight: bold;

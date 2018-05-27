@@ -1,18 +1,20 @@
-.App {
-  text-align: center;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
 .link {
   cursor: pointer;
+}
+
+.filterbar {
+    float: right;
+}
+.filterbar .fa-filter {
+    margin-right: 3px;
+}
+.filterbar [type="search"] {
+    -webkit-appearance: searchfield;
+}
+.filterbar [type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+}
+
+.table .link.fa-unsorted {
+    color: darkgrey;
 }

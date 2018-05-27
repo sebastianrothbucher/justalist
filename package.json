@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.0.0",
+    "font-awesome": "^4.7.0",
     "immutable": "^3.8.1",
     "prop-types": "^15.5.4",
     "react": "^16.3.1",
@@ -20,7 +21,7 @@
     "unexpected-react": "^5.0.1"
   },
   "scripts": {
-    "prestart": "cp node_modules/bootstrap/dist/css/bootstrap.min.css public/bootstrap.min.css",
+    "prestart": "cp -R node_modules/bootstrap public/bootstrap && cp -R node_modules/font-awesome public/font-awesome",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

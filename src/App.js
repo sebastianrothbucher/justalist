@@ -18,15 +18,15 @@ class App extends PureComponent {
     }
 
     createEditor(row, colId, editCallback) { // TODO: distinguish between col types
-        return (<ChoiceComponent choices={this.props.cols.find((c) => (c._id === colId)).choices} 
+        return (<ChoiceComponent xpand={true} choices={this.props.cols.find((c) => (c._id === colId)).choices} 
             value={(this.props.cols.find((c) => (c._id === colId)).choices.find((c) => c.value === row.colvalues[colId]) || null)} 
             onChange={(choice) => editCallback(choice ? choice.value : null)} />);
     }
 
     render() { // (one could do a lot of styling)
         return (<div>
-            <div className="form-inline"><input className="form-control" type="search" value={this.props.filter || ''} onInput={(event) => this.props.doFilter(event.target.value)} /></div>
-            <TableComponent tableClassName="table" cols={this.props.cols} rows={this.props.rowsSorted || this.props.rowsFiltered || this.props.rows}
+            <div><label className="filterbar"><span className="fa fa-filter"></span><input type="search" value={this.props.filter || ''} onInput={(event) => this.props.doFilter(event.target.value)} /></label></div>
+            <TableComponent tableClassName="table" cols={this.props.cols} rows={this.props.rowsSorted || this.props.rowsFiltered || this.props.rows} sort={this.props.sort}
                 onSort={(what, colid) => this.props.doSort(what, colid, (this.props.sort && this.props.sort.what === what && this.props.sort.colid === colid) ? (!this.props.sort.desc) : false)}
                 onRowEdit={(newRow) => this.props.doEditRow(newRow)}
                 editorFactory={this.createEditor.bind(this)} />
