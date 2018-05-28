@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { matchingForeground } from '../util/colorUtil';
 import './choice.css';
 
 export class ChoiceComponent extends PureComponent {
@@ -58,7 +59,7 @@ export class ChoiceComponent extends PureComponent {
                 <span className="clear" onClick={() => this._setSel(null)}></span>
                 <ul className="suggestContent">
                     {this.props.choices.map((c, i) => (
-                        <li key={i} role="option" onClick={() => this._setSel(c)} aria-selected={this.state.selIndex === i ? 'selected' : null} className={this.state.selIndex === i ? 'sel' : ''} style={{backgroundColor: (c.color || 'white')}}>{c.value}</li>
+                        <li key={i} role="option" onClick={() => this._setSel(c)} aria-selected={this.state.selIndex === i ? 'selected' : null} className={this.state.selIndex === i ? 'sel' : ''} style={{ backgroundColor: (c.color || "white"), color: matchingForeground(c.color || "white") }}>{c.value}</li>
                     ))}
                 </ul>
             </span>

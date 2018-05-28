@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'immutable';
+import { matchingForeground, determineBackground } from '../util/colorUtil';
 import '../App.css';
 
 export const TITLE = 'TITLE';
@@ -60,7 +61,7 @@ export class TableComponent extends PureComponent {
                     <tr key={r._id}>
                         <td style={{ width: TITLE_WIDTH + "%" }}><input value={this.state.editRow.get('title') || ''} onChange={(event) => this.changeEditRowTitle(event.target.value)} /></td>
                         {this.props.cols.map((c) => (
-                            <td key={c._id} style={{ backgroundColor: ((c.choices.filter((ch) => ch.value === r.colvalues[c._id])[0] || {}).color || 'white'), width: Math.floor((100 - TITLE_WIDTH) / this.props.cols.length) + "%" }}>{this.props.editorFactory ? this.props.editorFactory(this.state.editRow.toJS(), c._id, (val) => (this.changeEditRowCol(c._id, val))) : (<input value={this.state.editRow.get('colvalues').get(c._id) || ''} onChange={(event) => (this.changeEditRowCol(c._id, event.target.value))} />)}</td>
+                            <td key={c._id} style={{ backgroundColor: determineBackground(c, r), color: matchingForeground(determineBackground(c, r)), width: Math.floor((100 - TITLE_WIDTH) / this.props.cols.length) + "%" }}>{this.props.editorFactory ? this.props.editorFactory(this.state.editRow.toJS(), c._id, (val) => (this.changeEditRowCol(c._id, val))) : (<input value={this.state.editRow.get('colvalues').get(c._id) || ''} onChange={(event) => (this.changeEditRowCol(c._id, event.target.value))} />)}</td>
                         ))}
                         <td style={{ minWidth: ACTION_WIDTH + "px" }}><small><a className="link" onClick={() => this.closeEditRow(true)}>Save</a> <a className="link" onClick={() => this.closeEditRow()}>Discard</a></small></td>
                     </tr>
@@ -68,7 +69,7 @@ export class TableComponent extends PureComponent {
                     <tr key={r._id}>
                         <td style={{ width: "40%" }}>{r.title || ''}</td>
                         {this.props.cols.map((c) => (
-                            <td key={c._id} style={{ backgroundColor: ((c.choices.filter((ch) => ch.value === r.colvalues[c._id])[0] || {}).color || 'white'), width: Math.floor((100 - TITLE_WIDTH) / this.props.cols.length) + "%" }}>{r.colvalues[c._id] || ''}</td>
+                            <td key={c._id} style={{ backgroundColor: determineBackground(c, r), color: matchingForeground(determineBackground(c, r)), width: Math.floor((100 - TITLE_WIDTH) / this.props.cols.length) + "%" }}>{r.colvalues[c._id] || ''}</td>
                         ))}
                         <td style={{ minWidth: ACTION_WIDTH + "px" }}><small><a className="link" onClick={() => this.startEditRow(r)}>Edit</a></small></td>
                     </tr>
