@@ -70,5 +70,5 @@ ChoiceComponent.propTypes = {
     choices: PropTypes.arrayOf(PropTypes.shape({value: PropTypes.string.isRequired, color: PropTypes.string})).isRequired,
     value: PropTypes.shape({value: PropTypes.string.isRequired, color: PropTypes.string}),
     onChange: PropTypes.func, // gets new value as {value, color?} (null for empty)
-    xpand: PropTypes.boolean,
+    xpand: PropTypes.bool,
 }
