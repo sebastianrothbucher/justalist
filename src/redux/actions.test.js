@@ -35,6 +35,18 @@ describe("action creators", () => {
         });
     });
 
+    it("loads cols with async await", async () => { // same test again - just for the heck of it
+        loadColsServiceMock.mockImplementation(() => Promise.resolve(['c1', 'c2']));
+        const store = mockStore({});
+        await store.dispatch(loadCols());
+        expect(loadColsServiceMock.mock.calls.length, 'to be', 1);
+        expect(
+            store.getActions(),
+            'to exhaustively satisfy',
+            [{ type: COLS_LOADED, cols: ['c1', 'c2'] }]
+        );
+    });
+
     it("loads cols handling error", () => {
         loadColsServiceMock.mockImplementation(() => Promise.reject('whatever'));
         const store = mockStore({});

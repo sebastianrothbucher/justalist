@@ -21,4 +21,11 @@ describe("cols service", () => {
         });
     });
 
+    it("loads cols with async await", async () => { // same test again - just for the heck of it
+        wndwMock.fetch.mockReturnValue(Promise.resolve({ json: () => ([{ _id: 'c1' }, { _id: 'c2' }]) }));
+        let res = await loadColsService();
+        expect(wndwMock.fetch.mock.calls, 'to exhaustively satisfy', [[BASE_URL + '/1/cols']]);
+        expect(res, 'to satisfy', [{ _id: 'c1' }, { _id: 'c2' }]);
+    });
+
 });
