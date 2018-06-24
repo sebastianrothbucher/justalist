@@ -4,7 +4,7 @@ import './App.css';
 //import 'bootstrap-css-only/css/bootstrap.css'
 import { TableComponent } from './components/table';
 import { ChoiceComponent } from './components/choice';
-import { loadCols as loadColsAction, loadRows as loadRowsAction, filter as filterAction, sort as sortAction, editRow as editRowAction } from './redux/actions';
+import { loadCols as loadColsAction, loadRows as loadRowsAction, filter as filterAction, sort as sortAction, editRow as editRowAction, registerNotify as registerNotifyAction } from './redux/actions';
 
 class App extends PureComponent {
     constructor() {
@@ -15,6 +15,7 @@ class App extends PureComponent {
     componentDidMount() { // load what we need
         this.props.loadCols();
         this.props.loadRows();
+        this.props.registerNotify();
     }
 
     createEditor(row, colId, editCallback) { // TODO: distinguish between col types
@@ -39,6 +40,7 @@ const mapStateToProps = state => ({...state, cols: (state.cols || []), rows: (st
 const mapDispatchToProps = dispatch => ({
     loadCols: () => dispatch(loadColsAction()),
     loadRows: () => dispatch(loadRowsAction()),
+    registerNotify: () => dispatch(registerNotifyAction()),
     doFilter: (val) => dispatch(filterAction(val)),
     doSort: (what, colid, desc) => dispatch(sortAction(what, colid, desc)),
     doEditRow: (newRow) => dispatch(editRowAction(newRow))
