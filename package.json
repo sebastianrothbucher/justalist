@@ -22,6 +22,7 @@
     "unexpected-react": "^5.0.1"
   },
   "scripts": {
+    "readme": "pandoc README.md -o README.html",
     "prestart": "cp -R node_modules/bootstrap/ public/bootstrap && cp -R node_modules/font-awesome/ public/font-awesome",
     "start": "react-scripts start",
     "build": "react-scripts build",
