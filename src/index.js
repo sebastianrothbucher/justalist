@@ -6,7 +6,7 @@ import thunkMiddleware from 'redux-thunk';
 import mainReducer from './redux/reducers';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'font-awesome/css/font-awesome.css'; // TODO: definition for fonts
+import 'font-awesome/css/font-awesome.css';
 import './index.css';
 
 const store = createStore(mainReducer, applyMiddleware(

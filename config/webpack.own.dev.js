@@ -1,4 +1,3 @@
-// either take artificial stuff 1st (no JSX) or full - check book; TODO: get going!
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -47,12 +46,12 @@ module.exports = {
         ],
     },
     plugins: [
-        new HtmlWebpackPlugin({ // TODO: InterpolateHtmlPlugin (handle %PUBLIC_URL%)
+        new HtmlWebpackPlugin({
             //title: "Test",
             inject: "body", // implicit "onload" (following FB 4 now)
             template: "public/index.html",
         }),
     ],
     devtool: "cheap-source-map",
-}; // TODO: test-drive dev server
+};
 // TODO: (finally): prod config
