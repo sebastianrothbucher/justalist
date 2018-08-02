@@ -2,8 +2,6 @@
 
 # dependencies
 /node_modules
-/public/bootstrap/
-/public/font-awesome/
 
 # testing
 /coverage

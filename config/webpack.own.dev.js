@@ -28,7 +28,8 @@ module.exports = {
                         "babel-plugin-transform-react-jsx-self",
                     ],
                 },
-            }, {
+            }, 
+            {
                 test: /\.css$/,
                 use: [
                     {
@@ -37,7 +38,11 @@ module.exports = {
                     {
                         loader: require.resolve("css-loader"),
                     },
-                ], // TODO: bring in bootstrap
+                ],
+            }, 
+            {
+                test: /\.(ttf|woff2|woff|eot|png|jpeg|jpg|gif|svg)$/,
+                loader: require.resolve("url-loader"),
             },
         ],
     },
