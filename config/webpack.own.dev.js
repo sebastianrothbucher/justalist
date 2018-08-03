@@ -1,6 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+// call per se node_modules/.bin/webpack --config config/webpack.own.dev.js (aka npm run buildowndev)
+// can be debugged: node --inspect-brk node_modules/.bin/webpack --config config/webpack.own.dev.js - then: open devtools, click node, console: require('loadertodebug'), it appears in sources, set breakpoint & GO ;-)
 module.exports = {
     entry: {
         app: path.join(__dirname, "../src/index.js"),
