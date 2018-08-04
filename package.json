@@ -24,7 +24,8 @@
   "scripts": {
     "readme": "pandoc README.md -o README.html",
     "start": "react-scripts start",
-    "startowndev": "webpack-dev-server --config config/webpack.own.dev.js",
+    "startown": "http-server build/ -p 8081",
+    "startowndev": "webpack-dev-server --config config/webpack.own.dev.js --port 8081",
     "build": "react-scripts build",
     "buildowndev": "webpack --config config/webpack.own.dev.js",
     "test": "react-scripts test --env=jsdom",

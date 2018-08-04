@@ -41,6 +41,7 @@ module.exports = {
                         loader: require.resolve("css-loader"),
                         options: {
                             modules: true,
+                            sourceMap: true,
                         },
                     },
                 ],
@@ -54,6 +55,9 @@ module.exports = {
                     },
                     {
                         loader: require.resolve("css-loader"),
+                        options: {
+                            sourceMap: true,
+                        },
                     },
                 ],
             }, 
