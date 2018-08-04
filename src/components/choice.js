@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { matchingForeground } from '../util/colorUtil';
-import './choice.css';
+import styleRes from '../util/styleRes';
+import styles from './choice.css';
 
 export class ChoiceComponent extends PureComponent {
 
@@ -53,13 +54,13 @@ export class ChoiceComponent extends PureComponent {
     }
 
     render() {
-        return (<span className={"choice" + (this.props.xpand ? " xpand" : "")} role="listbox">
-            <span className="suggestPos" tabIndex="0" ref={(e) => this.suggestPos=e} onFocus={this._resetSel.bind(this)} onBlur={this._resetSel.bind(this)} onKeyDown={this._onKeyDown.bind(this)}>
-                <span className="current" style={{backgroundColor: ((this.props.value ? this.props.value.color : undefined) || 'white')}}>{this.props.value ? this.props.value.value : ''}</span>
-                <span className="clear" onClick={() => this._setSel(null)}></span>
-                <ul className="suggestContent">
+        return (<span className={styleRes(styles, 'choice') + (this.props.xpand ? (" " + styleRes(styles, 'xpand')) : "")} role="listbox">
+            <span className={styleRes(styles, 'suggestPos')} tabIndex="0" ref={(e) => this.suggestPos=e} onFocus={this._resetSel.bind(this)} onBlur={this._resetSel.bind(this)} onKeyDown={this._onKeyDown.bind(this)}>
+                <span className={styleRes(styles, 'current')} style={{backgroundColor: ((this.props.value ? this.props.value.color : undefined) || 'white')}}>{this.props.value ? this.props.value.value : ''}</span>
+                <span className={styleRes(styles, 'clear')} onClick={() => this._setSel(null)}></span>
+                <ul className={styleRes(styles, 'suggestContent')}>
                     {this.props.choices.map((c, i) => (
-                        <li key={i} role="option" onClick={() => this._setSel(c)} aria-selected={this.state.selIndex === i ? 'selected' : null} className={this.state.selIndex === i ? 'sel' : ''} style={{ backgroundColor: (c.color || "white"), color: matchingForeground(c.color || "white") }}>{c.value}</li>
+                        <li key={i} role="option" onClick={() => this._setSel(c)} aria-selected={this.state.selIndex === i ? 'selected' : null} className={this.state.selIndex === i ? styleRes(styles, 'sel') : ''} style={{ backgroundColor: (c.color || "white"), color: matchingForeground(c.color || "white") }}>{c.value}</li>
                     ))}
                 </ul>
             </span>

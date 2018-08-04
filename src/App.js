@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import './App.css';
+import styleRes from './util/styleRes';
+import styles from './App.css';
 //import 'bootstrap-css-only/css/bootstrap.css'
 import { TableComponent } from './components/table';
 import { ChoiceComponent } from './components/choice';
@@ -26,7 +27,7 @@ class App extends PureComponent {
 
     render() { // (one could do a lot of styling)
         return (<div>
-            <div><label className="filterbar"><span className="fa fa-filter"></span><input type="search" value={this.props.filter || ''} onInput={(event) => this.props.doFilter(event.target.value)} /></label></div>
+            <div><label className={styleRes(styles, 'filterbar')}><span className="fa fa-filter"></span><input type="search" value={this.props.filter || ''} onInput={(event) => this.props.doFilter(event.target.value)} /></label></div>
             <TableComponent tableClassName="table" cols={this.props.cols} rows={this.props.rowsSorted || this.props.rowsFiltered || this.props.rows} sort={this.props.sort}
                 onSort={(what, colid) => this.props.doSort(what, colid, (this.props.sort && this.props.sort.what === what && this.props.sort.colid === colid) ? (!this.props.sort.desc) : false)}
                 onRowEdit={(newRow) => this.props.doEditRow(newRow)}

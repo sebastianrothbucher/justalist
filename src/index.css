@@ -4,6 +4,6 @@ body {
   font-family: sans-serif;
 }
 
-.link {
+:global(.link) {
     cursor: pointer; 
 }

@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'immutable';
 import { matchingForeground, determineBackground } from '../util/colorUtil';
-import '../App.css';
 
 export const TITLE = 'TITLE';
 export const COL = 'COL';

@@ -32,6 +32,22 @@ module.exports = {
             }, 
             {
                 test: /\.css$/,
+                include: path.join(__dirname, "../src"),
+                use: [
+                    {
+                        loader: require.resolve("style-loader"),
+                    },
+                    {
+                        loader: require.resolve("css-loader"),
+                        options: {
+                            modules: true,
+                        },
+                    },
+                ],
+            }, 
+            {
+                test: /\.css$/,
+                exclude: path.join(__dirname, "../src"),
                 use: [
                     {
                         loader: require.resolve("style-loader"),

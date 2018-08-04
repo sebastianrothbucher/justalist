@@ -1,11 +1,7 @@
-.link {
-  cursor: pointer;
-}
-
 .filterbar {
     float: right;
 }
-.filterbar .fa-filter {
+.filterbar :global(.fa-filter) {
     margin-right: 3px;
 }
 .filterbar [type="search"] {
@@ -15,6 +11,6 @@
     -webkit-appearance: searchfield-cancel-button;
 }
 
-.table .link.fa-unsorted {
+:global(.table)/*bootstrap */ :global(.link.fa-unsorted) {
     color: darkgrey;
 }
