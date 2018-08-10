@@ -1,7 +1,9 @@
 const path = require('path');
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 
-// call per se node_modules/.bin/webpack --config config/webpack.own.dev.js (aka npm run buildowndev)
+// call per se node_modules/.bin/webpack --config config/webpack.own.prod.js (aka npm run buildownprod)
 // can be debugged: node --inspect-brk node_modules/.bin/webpack --config config/webpack.own.dev.js - then: open devtools, click node, console: require('loadertodebug'), it appears in sources, set breakpoint & GO ;-)
 module.exports = {
     entry: {
@@ -9,7 +11,7 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, "../build"),
-        filename: 'bundle.js',
+        filename: 'bundle.[hash:8].js',
         pathinfo: true,
     },
     module: {
@@ -33,46 +35,67 @@ module.exports = {
             {
                 test: /\.css$/,
                 include: path.join(__dirname, "../src"),
-                use: [
-                    {
-                        loader: require.resolve("style-loader"),
-                    },
-                    {
+                use: ExtractTextWebpackPlugin.extract({
+                    fallback: "style-loader", 
+                    use: {
                         loader: require.resolve("css-loader"),
                         options: {
-                            modules: true,
+                            minimize: true,
                             sourceMap: true,
+                            modules: true,
                         },
                     },
-                ],
+                }),
             }, 
             {
                 test: /\.css$/,
                 exclude: path.join(__dirname, "../src"),
-                use: [
-                    {
-                        loader: require.resolve("style-loader"),
-                    },
-                    {
+                use: ExtractTextWebpackPlugin.extract({
+                    fallback: "style-loader", 
+                    use: {
                         loader: require.resolve("css-loader"),
                         options: {
+                            minimize: true,
                             sourceMap: true,
                         },
                     },
-                ],
+                }),
             }, 
             {
-                test: /\.(ttf|woff2|woff|eot|png|jpeg|jpg|gif|svg)$/,
+                test: /\.(ttf|woff2|woff|eot)$/,
+                loader: require.resolve("file-loader"),
+                /*options: { TODO: Fix
+                    name: "[name].[hash:8].[ext]",
+                },*/
+            },
+            {
+                test: /\.(png|jpeg|jpg|gif|svg)$/,
                 loader: require.resolve("url-loader"),
+                options: {
+                    limit: 20000, // TODO: test other limit
+                    /*fallback: { TODO: fix
+                        loader: "file-loader",
+                        options: {
+                            name: "[name].[hash:8].[ext]",
+                        },
+                    },*/
+                },
             },
         ],
     },
     plugins: [
+        new ExtractTextWebpackPlugin({
+            filename: "[name].[contenthash:8].css"
+        }),
         new HtmlWebpackPlugin({
             //title: "Test",
             inject: "body", // implicit "onload" (following FB 4 now)
             template: "public/index.html",
         }),
+        new UglifyjsWebpackPlugin({
+            comments: false,
+            sourceMap: true,
+        }),
     ],
-    devtool: "cheap-source-map",
+    devtool: "hidden-source-map", // TODO: verify
 };

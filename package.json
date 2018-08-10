@@ -27,7 +27,10 @@
     "startown": "http-server build/ -p 8081",
     "startowndev": "webpack-dev-server --config config/webpack.own.dev.js --port 8081",
     "build": "react-scripts build",
+    "prebuildowndev": "rm ./build/*",
     "buildowndev": "webpack --config config/webpack.own.dev.js",
+    "prebuildownprod": "rm ./build/*",
+    "buildownprod": "webpack --config config/webpack.own.prod.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
