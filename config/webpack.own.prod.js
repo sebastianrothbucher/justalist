@@ -64,21 +64,17 @@ module.exports = {
             {
                 test: /\.(ttf|woff2|woff|eot)$/,
                 loader: require.resolve("file-loader"),
-                /*options: { TODO: Fix
+                options: {
                     name: "[name].[hash:8].[ext]",
-                },*/
+                },
             },
             {
                 test: /\.(png|jpeg|jpg|gif|svg)$/,
                 loader: require.resolve("url-loader"),
                 options: {
-                    limit: 20000, // TODO: test other limit
-                    /*fallback: { TODO: fix
-                        loader: "file-loader",
-                        options: {
-                            name: "[name].[hash:8].[ext]",
-                        },
-                    },*/
+                    limit: 20000,
+                    falback: "file-loader",
+                    name: "[name].[hash:8].[ext]", // used in fallback!
                 },
             },
         ],
@@ -97,5 +93,5 @@ module.exports = {
             sourceMap: true,
         }),
     ],
-    devtool: "hidden-source-map", // TODO: verify
+    devtool: "nosources-source-map", // only stack traces
 };
