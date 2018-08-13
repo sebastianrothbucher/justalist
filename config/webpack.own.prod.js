@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
@@ -8,10 +9,20 @@ const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
     entry: {
         app: path.join(__dirname, "../src/index.js"),
+        vendor: [
+            'react',
+            'prop-types',
+            'react-dom',
+            'react-redux',
+            'redux',
+            'redux-thunk',
+            'immutable',
+            'd3-color',
+        ],
     },
     output: {
         path: path.join(__dirname, "../build"),
-        filename: 'bundle.[hash:8].js',
+        filename: '[name].[hash:8].js',
         pathinfo: true,
     },
     module: {
@@ -91,6 +102,13 @@ module.exports = {
         new UglifyjsWebpackPlugin({
             comments: false,
             sourceMap: true,
+        }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify("production"),
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "vendor",
+
         }),
     ],
     devtool: "nosources-source-map", // only stack traces
