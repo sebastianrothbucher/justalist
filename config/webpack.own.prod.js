@@ -10,6 +10,7 @@ module.exports = {
     entry: {
         app: path.join(__dirname, "../src/index.js"),
         vendor: [
+            'react-scripts/config/polyfills' /* 1st; & thx, FB */, 
             'react',
             'prop-types',
             'react-dom',
