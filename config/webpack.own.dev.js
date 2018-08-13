@@ -9,7 +9,7 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, "../build"),
-        filename: 'bundle.js',
+        filename: '[name].js',
         pathinfo: true,
     },
     module: {
@@ -74,5 +74,5 @@ module.exports = {
             template: "public/index.html",
         }),
     ],
-    devtool: "cheap-source-map",
+    devtool: "eval-source-map",
 };
