@@ -7,11 +7,11 @@
     "d3-color": "^1.2.0",
     "font-awesome": "^4.7.0",
     "immutable": "^3.8.1",
-    "prop-types": "^15.5.4",
     "react": "^16.3.1",
+    "prop-types": "^15.5.4",
     "react-dom": "^16.3.1",
-    "react-redux": "^5.0.7",
     "redux": "^3.6.0",
+    "react-redux": "^5.0.7",
     "redux-thunk": "^2.2.0",
     "url-parse": "^1.4.3"
   },

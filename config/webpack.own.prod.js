@@ -14,8 +14,8 @@ module.exports = {
             'react',
             'prop-types',
             'react-dom',
-            'react-redux',
             'redux',
+            'react-redux',
             'redux-thunk',
             'immutable',
             'd3-color',
@@ -109,7 +109,6 @@ module.exports = {
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: "vendor",
-
         }),
     ],
     devtool: "nosources-source-map", // only stack traces

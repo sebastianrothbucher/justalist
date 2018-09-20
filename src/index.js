@@ -16,4 +16,4 @@ const store = createStore(mainReducer, applyMiddleware(
 ReactDOM.render(
     <Provider store={store}>
         <App />
-    </Provider>, document.getElementById('root'));
+    </Provider>, document.getElementById('root')); // TODO: handle window.onerror in error handler service

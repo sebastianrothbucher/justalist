@@ -6,92 +6,25 @@ const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 
 // call per se node_modules/.bin/webpack --config config/webpack.own.prod.js (aka npm run buildownprod)
 // can be debugged: node --inspect-brk node_modules/.bin/webpack --config config/webpack.own.dev.js - then: open devtools, click node, console: require('loadertodebug'), it appears in sources, set breakpoint & GO ;-)
-module.exports = { // TODO: require prod as basis
+module.exports = {...require('./webpack.own.prod'), 
     entry: {
-        app: path.join(__dirname, "../src/index.js"),
-        vendor: [
-            'react-scripts/config/polyfills' /* 1st; & thx, FB */, 
-            'prop-types',
-            'react-dom',
-            'react-redux',
-            'redux',
-            'redux-thunk',
-            'immutable',
-            'd3-color',
+        app: [
+            'react-scripts/config/polyfills', // sets globals, so should suffice after externals
+            'd3-color', 
+            path.join(__dirname, "../src/index.js"),
         ],
+        // vendor: [] (not needed for 27k)
     },
-    externals: {
-        'react': 'React'
-    },
-    output: {
-        path: path.join(__dirname, "../build"),
-        filename: '[name].[hash:8].js',
-        pathinfo: true,
-    },
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                loader: require.resolve("babel-loader"),
-                options: {
-                    cacheDirectory: true,
-                    presets: [
-                        "react", 
-                        "env",
-                    ],
-                    plugins: [
-                        "transform-object-rest-spread", 
-                        "babel-plugin-transform-react-jsx-source",
-                        "babel-plugin-transform-react-jsx-self",
-                    ],
-                },
-            }, 
-            {
-                test: /\.css$/,
-                include: path.join(__dirname, "../src"),
-                use: ExtractTextWebpackPlugin.extract({
-                    fallback: "style-loader", 
-                    use: {
-                        loader: require.resolve("css-loader"),
-                        options: {
-                            minimize: true,
-                            sourceMap: true,
-                            modules: true,
-                        },
-                    },
-                }),
-            }, 
-            {
-                test: /\.css$/,
-                exclude: path.join(__dirname, "../src"),
-                use: ExtractTextWebpackPlugin.extract({
-                    fallback: "style-loader", 
-                    use: {
-                        loader: require.resolve("css-loader"),
-                        options: {
-                            minimize: true,
-                            sourceMap: true,
-                        },
-                    },
-                }),
-            }, 
-            {
-                test: /\.(ttf|woff2|woff|eot)$/, // TODO: load via CDN also
-                loader: require.resolve("file-loader"),
-                options: {
-                    name: "[name].[hash:8].[ext]",
-                },
-            },
-            {
-                test: /\.(png|jpeg|jpg|gif|svg)$/,
-                loader: require.resolve("url-loader"),
-                options: {
-                    limit: 20000,
-                    falback: "file-loader",
-                    name: "[name].[hash:8].[ext]", // used in fallback!
-                },
-            },
-        ],
+    externals: { // (see index.html)
+        'react': 'React',
+        'prop-types': 'PropTypes',
+        'react-dom': 'ReactDOM',
+        'redux': 'Redux',
+        'react-redux': 'ReactRedux',
+        'redux-thunk': 'ReduxThunk',
+        'immutable': 'Immutable',
+        'font-awesome/css/font-awesome.css': 'window', // a 'lil crazy: nth is ever called, just need to stop looking (load via index.html - incl. fonts)
+        'bootstrap/dist/css/bootstrap.css': 'window', // (ditto before)
     },
     plugins: [
         new ExtractTextWebpackPlugin({
@@ -109,10 +42,5 @@ module.exports = { // TODO: require prod as basis
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify("production"),
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "vendor",
-
-        }),
     ],
-    devtool: "nosources-source-map", // only stack traces
 };
