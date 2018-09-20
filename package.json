@@ -32,6 +32,8 @@
     "buildowndev": "webpack --config config/webpack.own.dev.js",
     "prebuildownprod": "rm ./build/*",
     "buildownprod": "webpack --config config/webpack.own.prod.js",
+    "prebuildownprodcdn": "rm ./build/*",
+    "buildownprodcdn": "webpack --config config/webpack.own.prodcdn.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
